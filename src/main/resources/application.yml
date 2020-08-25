@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: exp-spike-service
+  profiles:
+    active: dev
+server:
+  port: ${server-port:9009}
