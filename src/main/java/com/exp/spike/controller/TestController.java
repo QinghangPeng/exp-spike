@@ -1,5 +1,6 @@
 package com.exp.spike.controller;
 
+import com.exp.spike.result.RestResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class TestController {
 
     @GetMapping("/test")
     @ApiOperation("测试")
-    public String test() {
-        return "hello world";
+    public RestResponse<String> test() {
+        return RestResponse.success("hello world");
     }
 
 }
