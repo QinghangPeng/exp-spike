@@ -8,5 +8,3 @@ spring:
     mode: HTML5
     prefix: classpath:/templates/
     suffix: .html
-server:
-  port: ${server-port:9010}
