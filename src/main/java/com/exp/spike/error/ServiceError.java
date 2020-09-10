@@ -13,6 +13,10 @@ public enum ServiceError implements IError {
      * 用于未定义错误
      */
     UN_KNOW_NULL("00000001", "未知错误"),
+    PASSWORD_EMPTY("00000002","登录密码不能为空"),
+    MOBILE_EMPTY("00000003","手机号不能为空"),
+    MOBILE_ERROR("00000004","手机号码格式错误"),
+    MOBILE_OR_PASSWORD_ERROR("00000005","用户名或者密码错误"),
     /**
      *  用于自定义错误
      */
