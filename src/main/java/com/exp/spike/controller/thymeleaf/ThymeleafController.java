@@ -1,4 +1,4 @@
-package com.exp.spike.controller;
+package com.exp.spike.controller.thymeleaf;
 
 import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;

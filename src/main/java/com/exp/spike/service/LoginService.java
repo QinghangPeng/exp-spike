@@ -2,6 +2,7 @@ package com.exp.spike.service;
 
 import com.exp.spike.domain.MiaoshaUser;
 import com.exp.spike.error.ServiceError;
+import com.exp.spike.exception.GlobalException;
 import com.exp.spike.result.RestResponse;
 import com.exp.spike.util.Md5Util;
 import com.exp.spike.util.ValidatorUtil;
@@ -33,27 +34,15 @@ public class LoginService {
         //参数校验
         String mobile = vo.getMobile();
         String password = vo.getPassword();
-        /*if (vo == null) {
-            return RestResponse.error(ServiceError.UN_KNOW_NULL);
-        }
-        if (StringUtils.isBlank(password)) {
-            return RestResponse.error(ServiceError.PASSWORD_EMPTY);
-        }
-        if (StringUtils.isBlank(mobile)) {
-            return RestResponse.error(ServiceError.MOBILE_EMPTY);
-        }
-        if (!ValidatorUtil.isMobile(mobile)) {
-            return RestResponse.error(ServiceError.MOBILE_ERROR);
-        }*/
         //登录
         MiaoshaUser user = service.getByNickname(mobile);
         if (user == null) {
-            return RestResponse.error(ServiceError.MOBILE_OR_PASSWORD_ERROR);
+            throw new GlobalException(ServiceError.MOBILE_OR_PASSWORD_ERROR);
         }
         //验证密码
         String calcPass = Md5Util.formPassToDBPass(password, user.getSalt());
         if (!calcPass.equals(user.getPassword())) {
-            return RestResponse.error(ServiceError.MOBILE_OR_PASSWORD_ERROR);
+            throw new GlobalException(ServiceError.MOBILE_OR_PASSWORD_ERROR);
         }
         return RestResponse.success(true);
     }

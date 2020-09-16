@@ -12,11 +12,12 @@ public enum ServiceError implements IError {
     /**
      * 用于未定义错误
      */
-    UN_KNOW_NULL("00000001", "未知错误"),
+    UN_KNOW_NULL("00000001", "发生意料之外的错误,请联系管理员"),
     PASSWORD_EMPTY("00000002","登录密码不能为空"),
     MOBILE_EMPTY("00000003","手机号不能为空"),
     MOBILE_ERROR("00000004","手机号码格式错误"),
     MOBILE_OR_PASSWORD_ERROR("00000005","用户名或者密码错误"),
+    BIND_ERROR("00000006",""),
     /**
      *  用于自定义错误
      */
@@ -38,6 +39,18 @@ public enum ServiceError implements IError {
         ServiceError error = ServiceError.DISPLAY_ERROR;
         error.setCode(code);
         error.setMsg(msg);
+        return error;
+    }
+
+    /**
+     *  对bindException的信息进行拼接
+     * @param args
+     * @return
+     */
+    public static ServiceError fillArgs(Object ... args) {
+        ServiceError error = ServiceError.BIND_ERROR;
+        String message = String.format("参数校验异常:%s",args);
+        error.setMsg(message);
         return error;
     }
 
