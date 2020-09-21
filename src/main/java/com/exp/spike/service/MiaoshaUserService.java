@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @ClassName: MiaoshaUserService
@@ -26,6 +27,8 @@ public class MiaoshaUserService {
     private MiaoshaUserDao dao;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private BasicService basicService;
 
     public MiaoshaUser getById(long id) {
         return dao.getById(id);
@@ -35,11 +38,18 @@ public class MiaoshaUserService {
         return dao.getByNickname(mobile);
     }
 
-    public MiaoshaUser getByToken(String token) {
+    public MiaoshaUser getByToken(HttpServletResponse response,String token) {
         if (StringUtils.isBlank(token)) {
             return null;
         }
-        return redisUtil.get(MiaoshaUserKey.token,token,MiaoshaUser.class);
+        MiaoshaUser user = redisUtil.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
+        if (user != null) {
+            //延长有效期
+            basicService.addCookie(response,user);
+        }
+        return user;
     }
+
+
 
 }

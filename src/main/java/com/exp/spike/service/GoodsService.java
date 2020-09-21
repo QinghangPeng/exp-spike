@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @ClassName: GoodsService
  * @Description:
@@ -21,12 +23,12 @@ public class GoodsService {
     @Autowired
     private MiaoshaUserService userService;
 
-    public String toList(Model model,String cookieToken,String paramToken) {
+    public String toList(Model model, String cookieToken, String paramToken, HttpServletResponse response) {
         if (StringUtils.isBlank(cookieToken) && StringUtils.isBlank(paramToken)) {
             return "login";
         }
         String token = StringUtils.isNotBlank(cookieToken) ? cookieToken : paramToken;
-        MiaoshaUser user = userService.getByToken(token);
+        MiaoshaUser user = userService.getByToken(response,token);
         model.addAttribute("user",user);
         return "goods_list";
     }

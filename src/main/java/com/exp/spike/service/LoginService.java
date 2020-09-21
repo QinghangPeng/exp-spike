@@ -32,9 +32,7 @@ public class LoginService {
     @Autowired
     private MiaoshaUserService service;
     @Autowired
-    private RedisUtil redisUtil;
-
-    public static final String COOKIE_NAME_TOKEN = "token";
+    private BasicService basicService;
     /**
      *  登录
      * @param vo
@@ -55,12 +53,7 @@ public class LoginService {
             throw new GlobalException(ServiceError.MOBILE_OR_PASSWORD_ERROR);
         }
         //生成cookie
-        String token = UUIDUtil.uuid();
-        redisUtil.set(MiaoshaUserKey.token,token,user);
-        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN,token);
-        cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        basicService.addCookie(response,user);
         return RestResponse.success(true);
     }
 

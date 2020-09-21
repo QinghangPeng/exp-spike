@@ -2,6 +2,7 @@ package com.exp.spike.controller;
 
 import com.exp.spike.domain.MiaoshaUser;
 import com.exp.spike.result.RestResponse;
+import com.exp.spike.service.BasicService;
 import com.exp.spike.service.GoodsService;
 import com.exp.spike.service.LoginService;
 import com.exp.spike.vo.LoginVo;
@@ -33,9 +34,10 @@ public class GoodsController {
 
     @GetMapping("/to_list")
     public String toList(Model model,
-                         @CookieValue(value = LoginService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
-                         @RequestParam(value = LoginService.COOKIE_NAME_TOKEN,required = false) String paramToken) {
-        return goodsService.toList(model,cookieToken,paramToken);
+                         @CookieValue(value = BasicService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
+                         @RequestParam(value = BasicService.COOKIE_NAME_TOKEN,required = false) String paramToken,
+                         HttpServletResponse response) {
+        return goodsService.toList(model,cookieToken,paramToken,response);
     }
 
 
