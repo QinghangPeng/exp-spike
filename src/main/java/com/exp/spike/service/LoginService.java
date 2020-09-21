@@ -3,14 +3,20 @@ package com.exp.spike.service;
 import com.exp.spike.domain.MiaoshaUser;
 import com.exp.spike.error.ServiceError;
 import com.exp.spike.exception.GlobalException;
+import com.exp.spike.redis.MiaoshaUserKey;
 import com.exp.spike.result.RestResponse;
 import com.exp.spike.util.Md5Util;
+import com.exp.spike.util.RedisUtil;
+import com.exp.spike.util.UUIDUtil;
 import com.exp.spike.util.ValidatorUtil;
 import com.exp.spike.vo.LoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @ClassName: LoginService
@@ -25,12 +31,14 @@ public class LoginService {
 
     @Autowired
     private MiaoshaUserService service;
+    @Autowired
+    private BasicService basicService;
     /**
      *  登录
      * @param vo
      * @return
      */
-    public RestResponse<Boolean> doLogin(LoginVo vo) {
+    public RestResponse<Boolean> doLogin(HttpServletResponse response,LoginVo vo) {
         //参数校验
         String mobile = vo.getMobile();
         String password = vo.getPassword();
@@ -44,6 +52,8 @@ public class LoginService {
         if (!calcPass.equals(user.getPassword())) {
             throw new GlobalException(ServiceError.MOBILE_OR_PASSWORD_ERROR);
         }
+        //生成cookie
+        basicService.addCookie(response,user);
         return RestResponse.success(true);
     }
 
