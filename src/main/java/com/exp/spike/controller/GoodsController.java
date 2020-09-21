@@ -34,10 +34,8 @@ public class GoodsController {
 
     @GetMapping("/to_list")
     public String toList(Model model,
-                         @CookieValue(value = BasicService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
-                         @RequestParam(value = BasicService.COOKIE_NAME_TOKEN,required = false) String paramToken,
-                         HttpServletResponse response) {
-        return goodsService.toList(model,cookieToken,paramToken,response);
+                         MiaoshaUser user) {
+        return goodsService.toList(model,user);
     }
 
 

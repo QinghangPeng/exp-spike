@@ -20,15 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class GoodsService {
 
-    @Autowired
-    private MiaoshaUserService userService;
-
-    public String toList(Model model, String cookieToken, String paramToken, HttpServletResponse response) {
-        if (StringUtils.isBlank(cookieToken) && StringUtils.isBlank(paramToken)) {
-            return "login";
-        }
-        String token = StringUtils.isNotBlank(cookieToken) ? cookieToken : paramToken;
-        MiaoshaUser user = userService.getByToken(response,token);
+    public String toList(Model model, MiaoshaUser user) {
         model.addAttribute("user",user);
         return "goods_list";
     }
