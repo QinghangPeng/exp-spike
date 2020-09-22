@@ -53,7 +53,8 @@ public class LoginService {
             throw new GlobalException(ServiceError.MOBILE_OR_PASSWORD_ERROR);
         }
         //生成cookie
-        basicService.addCookie(response,user);
+        String token = UUIDUtil.uuid();
+        basicService.addCookie(response,user,token);
         return RestResponse.success(true);
     }
 

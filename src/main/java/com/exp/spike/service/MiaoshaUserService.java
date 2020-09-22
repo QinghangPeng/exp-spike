@@ -45,7 +45,7 @@ public class MiaoshaUserService {
         MiaoshaUser user = redisUtil.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
         if (user != null) {
             //延长有效期
-            basicService.addCookie(response,user);
+            basicService.addCookie(response,user,token);
         }
         return user;
     }
