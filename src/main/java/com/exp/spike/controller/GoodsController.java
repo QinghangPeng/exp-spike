@@ -38,5 +38,12 @@ public class GoodsController {
         return goodsService.toList(model,user);
     }
 
+    @GetMapping("/to_detail/{goodsId}")
+    public String detail(Model model,
+                         MiaoshaUser user,
+                         @PathVariable("goodsId") Long goodsId) {
+        return goodsService.toDetail(model,user,goodsId);
+    }
+
 
 }

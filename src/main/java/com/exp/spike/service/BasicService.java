@@ -32,8 +32,7 @@ public class BasicService {
      * @param response
      * @param user
      */
-    public void addCookie(HttpServletResponse response, MiaoshaUser user) {
-        String token = UUIDUtil.uuid();
+    public void addCookie(HttpServletResponse response, MiaoshaUser user,String token) {
         redisUtil.set(MiaoshaUserKey.token,token,user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN,token);
         cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
